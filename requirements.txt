@@ -1,0 +1,9 @@
+datasets==3.0.1
+google-genai==0.3.0
+matplotlib==3.10.1
+mistralai==1.5.1
+numpy==1.26.4
+pillow==10.4.0
+python_dotenv==1.0.1
+PyMuPDF==1.25.1
+reportlab==4.3.1
