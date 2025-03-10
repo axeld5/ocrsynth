@@ -5,32 +5,16 @@ This project aims to create a new OCR benchmark by generating PDF documents with
 ## Features
 
 -   **PDF Generation:**
-    -      Generates PDF documents with randomly placed text images.
-    -      Customizable text styles, fonts, and sizes.
-    -      Handles text placement to avoid overlaps.
-    -      Applies random augmentations to text images.
+    - Generates PDF documents with randomly placed text images.
+    - Customizable text styles, fonts, and sizes.
+    - Handles text placement to avoid overlaps.
+    - Applies random augmentations to text images.
 -   **OCR Evaluation:**
-    -      Utilizes Mistral and Google Gemini OCR APIs.
-    -      Calculates word accuracy by comparing OCR output to ground truth.
-    -      Generates a JSON file containing ground truth text and bounding box information.
+    - Utilizes Mistral and Google Gemini OCR APIs.
+    - Calculates word accuracy by comparing OCR output to ground truth.
+    - Generates a JSON file containing ground truth text and bounding box information.
 -   **Docker Support:**
-    -      Provides a Dockerfile for easy setup and execution.
-
-## Directory Structure
-
-ocrword_bench/
-├── README.md
-├── Dockerfile
-├── evaluator_function.py
-├── main.py
-├── requirements.txt
-└── src/
-├── init.py
-├── create_text_image.py
-├── pdf_functions.py
-├── placement_validity.py
-└── text_augmentations.py
-
+    - Provides a Dockerfile for easy setup and execution.
 
 ## File description
 
