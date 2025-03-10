@@ -3,3 +3,4 @@ generated_pdf
 lab
 __pycache__
 .env
+gen_images
