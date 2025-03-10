@@ -1,7 +1,7 @@
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.utils import ImageReader
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageEnhance
 import fitz
 import random
 import io
@@ -194,8 +194,10 @@ def place_image_in_pdf(canvas_obj, image, x_centroid, y_centroid):
     canvas_obj.drawImage(img_reader, x_pos, y_pos, width=img_width, height=img_height)
     
     return {
-        'x_pos': x_pos,
-        'y_pos': y_pos,
+        'x0': x_pos,
+        'y0': y_pos,
+        'x1': x_pos + img_width,
+        'y1': y_pos + img_height,
         'width': img_width,
         'height': img_height,
         'centroid_x': x_centroid,
@@ -410,3 +412,72 @@ def find_optimal_placement(image, existing_boxes, page_width, page_height,
                                    margin, step // 2)
     
     return None
+
+def random_augment(image):
+    """
+    Randomly apply augmentations to an image with 50% chance of no augmentation.
+    
+    Args:
+        image: A PIL Image object
+        
+    Returns:
+        The augmented PIL Image object
+    """
+    # 50% chance of no augmentation
+    if random.random() < 0.5:
+        return image
+    
+    # Create a copy to avoid modifying the original
+    img = image.copy()
+    
+    # List of possible augmentations
+    augmentations = [
+        'stretch_horizontal',
+        'stretch_vertical',
+        'compress_horizontal',
+        'compress_vertical',
+        'color_degradation',
+        'rotation'
+    ]
+    
+    # Randomly select 1-3 augmentations to apply
+    num_augmentations = random.randint(1, 3)
+    selected_augmentations = random.sample(augmentations, num_augmentations)
+    
+    for aug in selected_augmentations:
+        if aug == 'stretch_horizontal':
+            # Stretch horizontally by 10-30%
+            stretch_factor = random.uniform(1.1, 1.3)
+            new_width = int(img.width * stretch_factor)
+            img = img.resize((new_width, img.height))
+            
+        elif aug == 'stretch_vertical':
+            # Stretch vertically by 10-30%
+            stretch_factor = random.uniform(1.1, 1.3)
+            new_height = int(img.height * stretch_factor)
+            img = img.resize((img.width, new_height))
+            
+        elif aug == 'compress_horizontal':
+            # Compress horizontally by 10-30%
+            compress_factor = random.uniform(0.7, 0.9)
+            new_width = int(img.width * compress_factor)
+            img = img.resize((new_width, img.height))
+            
+        elif aug == 'compress_vertical':
+            # Compress vertically by 10-30%
+            compress_factor = random.uniform(0.7, 0.9)
+            new_height = int(img.height * compress_factor)
+            img = img.resize((img.width, new_height))
+            
+        elif aug == 'color_degradation':
+            # Reduce color saturation
+            enhancer = ImageEnhance.Color(img)
+            degradation_factor = random.uniform(0.3, 0.8)
+            img = enhancer.enhance(degradation_factor)
+            
+        elif aug == 'rotation':
+            # Rotate by -25 to 25 degrees
+            angle = random.uniform(-25, 25)
+            img = img.rotate(angle, resample=Image.BICUBIC, expand=True)
+    
+    return img
