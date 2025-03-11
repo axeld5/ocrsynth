@@ -8,8 +8,8 @@ def word_accuracy(ground_truth: str, ocr_text: str) -> float:
     :param ocr_text: The OCR-generated text.
     :return: Accuracy as a percentage (0-100).
     """
-    gt_words = ground_truth.replace("\n", " ").lower().split()
-    ocr_words = ocr_text.replace("\n", " ").lower().split()
+    gt_words = ground_truth.replace("\n", " ").replace("  ", " ").lower().split()
+    ocr_words = ocr_text.replace("\n", " ").replace("  ", " ").lower().split()
     
     matcher = SequenceMatcher(None, gt_words, ocr_words)
     correct_words = sum(block.size for block in matcher.get_matching_blocks())
