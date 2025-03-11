@@ -1,6 +1,6 @@
-# ocrword_bench
+# OCRSYNTH
 
-This project aims to create a new OCR benchmark by generating PDF documents with text images and evaluating the performance of different OCR models. It uses Python, PIL, ReportLab, and OCR APIs from Mistral and Google's Gemini to generate and evaluate the benchmark.
+This project aims to allow the synthetic generation of OCR datasets using textual datasets. On top of that, it can be used to create a new OCR benchmark by generating PDF documents with text images and evaluating the performance of different OCR models. It uses Python, PIL, ReportLab, and OCR APIs from Mistral and Google's Gemini to generate and evaluate the benchmark.
 
 ## Features
 
